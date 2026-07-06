@@ -33,7 +33,7 @@ This project rebuilds that structure as a multi-agent system.
                               FINAL BRIEF
 ```
 
-Built as a [LangGraph](https://github.com/langchain-ai/langgraph) `StateGraph`:
+Built as a LangGraph:
 
 1. **`fetch_data`** — a single shared node pulls price history (via `yfinance`), benchmark data, and company info once, so the three analysts don't redundantly hit the API three times each.
 2. **Fan-out** — `fetch_data` has an edge to all three analyst nodes. Since none of the analysts depend on each other, LangGraph executes them **concurrently**.
@@ -47,32 +47,14 @@ Built as a [LangGraph](https://github.com/langchain-ai/langgraph) `StateGraph`:
 | **Risk Analyst** | Annualized volatility, max drawdown, beta vs. benchmark, Sharpe ratio | Groq — `llama-3.3-70b-versatile` |
 | **Aggregator** | The three finished verdicts (not the raw numbers) | Gemini 2.5 Flash |
 
-The aggregator is explicitly prompted to (1) summarize where the analysts **agree**, (2) flag where they **disagree** and why, and (3) give one final stance (Bullish/Bearish/Neutral) with a confidence level — so it's forced to reconcile conflicting views rather than just average them.
-
-## Why Two Different LLM Providers
-
-- The three analysts are cheap, high-volume, "read the numbers and give a verdict" calls — Groq's free tier (fast LPU inference) is a great fit.
-- The aggregator only runs once per query but does the hardest reasoning step (reconciling 3 independent, sometimes-conflicting opinions), so it's routed to a different model — Gemini 2.5 Flash.
-- This also demonstrates that the orchestration layer (LangGraph) doesn't care which model backs a given node — agents are freely swappable, which is the whole point of building on an agentic framework instead of one long prompt.
+The aggregator is explicitly prompted to summarize where the analysts **agree** and flag where they **disagree** and why, and give one final stance (Bullish/Bearish/Neutral) with a confidence level so it's forced to reconcile conflicting views rather than just average them.
 
 ## Tech Stack
 
-- **Orchestration:** LangGraph (`StateGraph`, parallel fan-out/fan-in)
+- **Orchestration:** LangGraph
 - **Sub-agent LLM:** Groq (`llama-3.3-70b-versatile`) via `langchain-groq`
 - **Aggregator LLM:** Google Gemini 2.5 Flash via `langchain-google-genai`
-- **Market data:** `yfinance` (free, no API key required)
-- **Numerics:** `numpy`, `pandas`
-- **Environment:** Jupyter Notebook
-
-## Project Structure
-
-```
-.
-├── multi_agent_stock_research.ipynb   # the entire system — one notebook, one file
-└── README.md                          # this file
-```
-
-Everything — state schema, data fetching, indicator math, all four agents, the rate limiter, and the graph — lives in a single notebook, organized into clearly labeled, sequential cells (see the notebook's own table of contents in its first markdown cell).
+- **Market data:** `yfinance`
 
 ## Setup
 
