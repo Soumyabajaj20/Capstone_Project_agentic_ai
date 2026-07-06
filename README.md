@@ -107,5 +107,4 @@ The Aggregator's job was to reconcile a bearish chart against bullish fundamenta
 
 ---
 
-**Course:** Agentic AI — Learners' Space 2026, Week 4 Capstone
-**Author:** Sonu (IIT Bombay, Roll No. 25B2140)
+**Author:** Soumya Bajaj (Roll No. 25B2140)
