@@ -1,33 +1,14 @@
 # Multi-Agent Stock Research Desk
 
-**Agentic AI — Learners' Space 2026 — Week 4 Capstone Project**
+**Week 4 Capstone Project**
 
-A multi-agent system that researches a stock the way a real equity research desk does: three independent analysts each file their own verdict from their own slice of data, and a portfolio manager reconciles their opinions into one final call — instead of one model blending everything into a shallow, single-lens answer.
-
----
-
-## Table of Contents
-
-- [Problem Statement](#problem-statement)
-- [Architecture — Parallel + Aggregator](#architecture--parallel--aggregator)
-- [Why Two Different LLM Providers](#why-two-different-llm-providers)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Setup](#setup)
-- [Configuration](#configuration)
-- [Running the Notebook](#running-the-notebook)
-- [Sample Output](#sample-output)
-- [Rate Limit Monitoring](#rate-limit-monitoring)
-- [A Gemini Gotcha We Hit (and Fixed)](#a-gemini-gotcha-we-hit-and-fixed)
-- [Design Decisions & Trade-offs](#design-decisions--trade-offs)
-- [Known Limitations](#known-limitations)
-- [Judging Criteria Mapping](#judging-criteria-mapping)
+it is a multi-agent system that researches a stock the way a real equity research desk does: three independent analysts each file their own verdict from their own slice of data, and a portfolio manager reconciles their opinions into one final call instead of one model blending everything into a shallow, single-lens answer.
 
 ---
 
 ## Problem Statement
 
-Ask a single LLM to "analyse this stock" and it tends to blend technical, fundamental, and risk reasoning into one shallow paragraph — because it never actually separates the reasoning. In real research desks, a technical analyst, a fundamentals analyst, and a risk officer each file **independent** notes without seeing each other's work, and a portfolio manager is the only one who reconciles all three into a final call. That separation is what surfaces genuine disagreement (e.g. "the chart looks great but the risk profile is ugly") instead of averaging it away.
+Ask a single LLM to "analyse this stock" and it tends to blend technical, fundamental, and risk reasoning into one shallow paragraph because it never actually separates the reasoning. In real research desks, a technical analyst, a fundamentals analyst, and a risk officer each file **independent** notes without seeing each other's work, and a portfolio manager is the only one who reconciles all three into a final call. That separation is what surfaces genuine disagreement (e.g. "the chart looks great but the risk profile is ugly") instead of averaging it away.
 
 This project rebuilds that structure as a multi-agent system.
 
